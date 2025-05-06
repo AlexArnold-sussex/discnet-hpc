@@ -45,9 +45,7 @@ ood.artemis.hrc.sussex.ac.uk
 
 |  ⚠️ Notice ⚠️  |
 | :-----------: |
-| **IMPORTANT:** While access via a remote CLI shell (e.g. via *ssh*/*sftp*) is quite common for HPC systems, web interfaces like Open OnDemand are still far less common.|
-| Hence, for all the following exercises, try to find the solution using just *ssh* as well, even if the GUI provides you with it in a more convenient way here |
-| on Artemis. |
+| **IMPORTANT:** While access via a remote CLI shell (e.g. via *ssh*/*sftp*) is quite common for HPC systems, web interfaces like Open OnDemand are still far less common. Hence, for all the following exercises, try to find the solution using just *ssh* as well, even if the GUI provides you with it in a more convenient way here on Artemis. |
 
 
 ## Verify Server
@@ -85,7 +83,7 @@ $ vim
 
 ### Remote Desktop
 
-In windows mode you can use the terminal mode editors or you can use editors that have a GUI. Besides emacs in its (default) window mode, other more “notepad-like” editors like gedit are also available on Artemis. You can invoke these editors from the command line within the remote desktop environment e.g.
+In windows mode you can use the terminal mode editors or you can use editors that have a GUI. Besides emacs in its (default) window mode, other more “notepad-like” editors like gedit are also available on Artemis. You can invoke these editors from the terminal within the remote desktop environment e.g.
 
 ```
 $ gedit
