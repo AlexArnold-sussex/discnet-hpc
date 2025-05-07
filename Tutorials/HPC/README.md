@@ -3,14 +3,14 @@
     <img src="images/discnet-logo.png" alt="Logo" height="100">
   </a>
 
-  <h3 align="center">HPC Exercises/h3>
+  <h3 align="center">HPC Exercises</h3>
   <p align="center">
     This set of exercises covers all the essential skills needed to work with an HPC system hence I like to call them the 12 labours that turn you into a HPCules with the divine IT powers of a well-trained HPC user.
   </p>
 </div>
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Sections</summary>
+  <summary>Exercises</summary>
   <ol>
     <li><a href="#logging-in">Logging In</a></li>
     <li><a href="#verify-server">Verify Server</a></li>
@@ -119,7 +119,7 @@ Instructions for using PuTTygen can be found here.
 
 If you are using a Linux or macOS desktop then use the command
 ```
-ssh-keygen -t rsa -b 4096
+$ ssh-keygen -t rsa -b 4096
 ```
 Try not to use less than 4096 bits to ensure that your key is strong enough.
 
@@ -183,16 +183,16 @@ $ gedit
 Linux applications often use (hidden) dot files. These are files located in your $HOME that start with a dot, eg: .bashrc. These are sometimes referred to as startup files which contain information used by a particular application when its starts.
 
 - Use an editor of your choice to edit the file $HOME/.bashrc.
-  Add the following line:
+  Modify the following line:
 
   ```
-  PS1="(Training)[\u@\h\[\e[1;34m\](artemis)\[\e[0m\] \W]\$"
+  PS1="(HPC Training)[\u@\h\[\e[1;34m\](artemis)\[\e[0m\] \W]\$"
   ```
 
 - once added execute the following:
   ```
-  source $HOME/.bashrc
-  ls
+  $ source $HOME/.bashrc
+  $ ls
   ```
   Do you see a difference in your prompt?
 
@@ -223,11 +223,11 @@ module av
 
 - Now find the correct module name for the latest version of R available on Artemis (hint: use *module spider*) and load it.
   ```
-  module load <name>
+  $ module load <name>
   ```
   where you replace the name of the module. This loads the module for R which adds the respective application folder containing the binary of the application to the search path of your shell ($PATH).
   ```
-  echo $PATH
+  $ echo $PATH
   ```
   Check this before and after loading/unloading the module.
 - Now try running R from the command line again. This time the “R” environment should start. Use quit() to close it and to return to your shell.
@@ -237,7 +237,7 @@ module av
 
 # JOB HANDLING
 
-## Examine the job queues
+## Examine job queues
 
 The login servers are configured to run relatively small programs. These include editors, browsers, small compilations etc. Larger programs must be executed on a compute node (or compute server). Work is submitted to the compute nodes as a "job" via a "queue". Once a job is submitted the "scheduler" and "resource" managers will start the job on the most suitable compute node(s) when appropriate. Often this is immediate but if the load is heavy the job will be "queued" to be executed at a later time when the required resources become available. Each partition has its own queue.
 
@@ -252,4 +252,168 @@ The commands to examine the partitions and associated job queues are called *sin
 - Show a summary of each of the queues.
 - Show all running & queued jobs for a (any) specific queue.
 
+## Run an interactive job
 
+In this exercise we will run some simple “R” commands interactively on a compute node. Please read the related article HERE on how to run interactive jobs on SCIAMA-4.
+
+### Exercises
+- First we need to allocate resources (here 1 task/core by default) on a compute node and run a shell on it:
+  ```
+  $ srun -p discnet --pty bash
+  ```
+  The terminal should respond similar to:
+  ```
+  srun: job 1060981 queued and waiting for resources
+  srun: job 1060981 has been allocated resources
+  ```
+  Your terminal is blocked until the resources become available. Use the squeue command in another terminal/ssh login and identify your interactive job and verify the partition it is queued for.
+  Once the requested resources are available, a new shell opens on one of the requested node.
+
+- Ensure you have the “R” module loaded in this shell. If not, then load it as you have learned in a previous exercise.
+
+- In the terminal run the R program. Execute the following commands (a file with these command can be found in the training/scripts directory):
+  ```
+  Square <- function(x)
+  { return(x^2) }
+  print(Square(4))
+  print(Square(x=4)) # same thing
+  quit()
+  ```
+- Confirm that you see output similar to:
+
+  ```
+  R version 3.4.1 (2017-06-30) — “Single Candle”
+  Copyright (C) 2017 The R Foundation for Statistical Computing
+  Platform: x86_64-pc-linux-gnu (64-bit)
+
+  R is free software and comes with ABSOLUTELY NO WARRANTY.
+  You are welcome to redistribute it under certain conditions.
+  Type ‘license()’ or ‘licence()’ for distribution details.
+
+  R is a collaborative project with many contributors.
+  Type ‘contributors()’ for more information and
+  ‘citation()’ on how to cite R or R packages in publications.
+
+  Type ‘demo()’ for some demos, ‘help()’ for on-line help, or
+  ‘help.start()’ for an HTML browser interface to help.
+  Type ‘q()’ to quit R.
+
+  [Previously saved workspace restored]
+
+  Square <- function(x)
+  + { return(x^2) }
+  > print(Square(4))
+  [1] 16
+  > print(Square(x=4)) # same thing
+  [1] 16
+  > quit()
+  Save workspace image? [y/n/c]: n
+  ```
+
+- Exit from the interactive shell by typing exit or EOF/EOT interrupt via CTRL-D.
+
+- Repeat requesting an interactive shell, but this time use *screen* to keep the request open while you log out of Artemis, log back in again and recover that screen.
+
+
+## Submit a batch job
+
+In this exercise we will run our simple R commands as a batch job. As with the interactive job in the previous exercise we use the sbatch command. Full documentation on sbatch can be found in the system’s man pages (man sbatch) or its online documentation. The usual way to submit a batch job is to create a job script. The lines starting with “#SBATCH” are called directives and map to the sbatch arguments that could be used on the command line. Here is an example job script:
+```
+#!/usr/bin/env bash
+#
+#SBATCH --job-name=training_batch
+#SBATCH --partition=discnet
+#SBATCH --ntasks=1
+#SBATCH --time=1:00
+
+echo $SLURM_JOB_NAME
+echo "Current working directory is `pwd`"
+echo "Starting run at: `date`"
+
+module purge
+module load R
+
+srun R -f training/src/square.r
+
+# output how and when job finished
+echo "Program finished with exit code $? at: `date`"
+# end of jobscript
+```
+The job will create an output file and an error file. These will be created in the working directory by default.
+
+### Exercise
+
+- Cut and paste the above example into a file called “batch-job.sh” in your $HOME . Submit the job:
+
+- cd $HOME; sbatch batch-job.sh
+
+- Use the squeue command to confirm the status of the job.
+
+- Look for and examine the output file and check its content. Try to modify your submission script to tell SLURM to write the output and errors (technically, the stdout & stderr streams) into separate files and to store it into the training/logs folder.
+
+- Look in the sbatch documentation to find out how to resubmit the job on hold. The job will appear in the queue with status PD and the reason (JobHeldUser).
+
+- Release the job (hint: *scontrol*) and confirm it runs.
+
+
+## Advanced batch jobs
+
+### Arrays
+
+The best and recommended way to submit many jobs (>100) is using SLURM’s jobs array feature. The job arrays allow managing big number of jobs more effectively and faster. To specify job array use --array as follows:
+
+Tell SLURM how many jobs you will have in array:
+
+  --array=0-9. There are 10 jobs in array. The first job has index 0, and the last job has index 9.
+  --array=5-8. There are 4 jobs in array. The first job has index 5, and the last job has index 8.
+  --array=2,4,6. There are 3 jobs in array with indices 2, 4 and 6.
+
+Now you can write a job submission script that looks like:
+```
+#!/usr/bin/env bash
+#
+#SBATCH --job-name=training_batch
+#SBATCH --partition=training.q
+#SBATCH --cpus-per-task=1
+#SBATCH --time=1:00
+#SBATCH --output=test_%A_%a.out
+#SBATCH --array=1-3
+
+echo $SLURM_JOB_NAME
+echo $SLURM_ARRAY_TASK_ID
+```
+
+### Dependencies
+
+Often we develop pipelines where a particular job must be launched only after previous jobs were successully completed. SLURM provides a way to implement such pipelines with its --dependency option:
+
+  --dependency=afterok:<job_id>. Submitted job will be launched if and only if job with job_id identifier was successfully completed. If job_id is a job array, then all jobs in that job array must be successfully completed.
+  --dependency=afternotok:<job_id>. Submitted job will be launched if and only if job with job_id identifier failed. If job_id is a job array, then at least one job in that array failed. This option may be useful for cleanup step.
+  --dependency=afterany:<job_id>. Submitted job wil be launched after job with job_id identifier terminated i.e. completed successfully or failed.
+
+### Exercises
+
+- Copy and paste the above example into a file called “array-job.sh” in your $HOME. Submit the job:
+  ```
+  $ cd $HOME; sbatch array-job.sh
+  ```
+
+- Look for and examine the output files to check the content. Modify the script to run 6 array jobs and check the status on the queue. (squeue -r or scontrol show job jobid)
+
+- The output should be similar to:
+
+- Now submit the script to run 20 array jobs but with only 5 at a time.
+  ```
+  sbatch --array [1-20]%5 array-job.sh
+  ```
+  Check the status of your job. If some of your jobs are still queued cancel the remainder. Check the output files to see how many of the array jobs ran.
+  ```
+  scancel <job_id>
+  ```
+
+- Finally, submit a batch job to run an array of 1-10 and submit another batch job of array 11-20 which will only run if the first array jobs complete successfully.
+  ```
+  sbatch --array [1-10] array-job.sh
+  sbatch --dependency=afterok:jobid --array [11-20] array-job.sh
+  ```
+  Check the status of your job on the queue. Did the first array of jobs work and has the second array run? 
