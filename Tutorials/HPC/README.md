@@ -3,19 +3,27 @@
     <img src="images/discnet-logo.png" alt="Logo" height="100">
   </a>
 
-  <h3 align="center">HPC Exercises</h3>
+  <h3 align="center">HPC Exercises/h3>
   <p align="center">
-    This set of exercise will ...
+    This set of exercises covers all the essential skills needed to work with an HPC system hence I like to call them the 12 labours that turn you into a HPCules with the divine IT powers of a well-trained HPC user.
   </p>
 </div>
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Sections</summary>
   <ol>
-    <li><a href="#accessing-the-system">Accessing the system</a></li>
-    <li><a href="#software">Software</a></li>
-    <li><a href="#job-handling">Job Handling</a></li>
-    <li><a href="#summary">Summary</a></li>
+    <li><a href="#logging-in">Logging In</a></li>
+    <li><a href="#verify-server">Verify Server</a></li>
+    <li><a href="#ssh-key-authentication">SSH Key Authentication</a></li>
+    <li><a href="#edit-a-simple-textfile">Edit a simple textfile</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#examine-job-queues">Examine job queues</a></li>
+    <li><a href="#run-an-interactive-job">Run an interactive job</a></li>
+    <li><a href="#submit-a-batch-jobs">Submit a batch job</a></li>
+    <li><a href="#advanced-batch-jobs">Advanced batch jobs</a></li>
+    <li><a href="#first-openmp-program">First OpenMP Programm</a></li>
+    <li><a href="#first-mpi-program">First MPI Programm</a></li>
+    <li><a href="#mini-challenge">Mini-challenge</a></li>
   </ol>
 </details>
 
@@ -23,7 +31,7 @@
 
 # ACCESSING THE SYSTEM
 
-## Login
+## Logging in
 
 <p>
 Access to the Artemis Hybrid Research Cluster (HRC) is expected to be primarily be via your browser or ssh client, and if off campus, using the VPN.
@@ -50,27 +58,108 @@ ood.artemis.hrc.sussex.ac.uk
 
 ## Verify Server
 
-### Background
-<p>
-When connecting to a remote server, there is always the chance that your connection gets intercepted and listened upon despite the connection being encrypted (''man-in-the-middle'' attack). In this exercise, we will guide you through the steps to verify that the connection is indeed secure.
-</p>
+Artemis like most other servers uses the S(ecure)SH(ell) protocol to allow users to work on it from a remote computer. The connection is encrypted to ensure that nobody can intercept and alter the commands sent to Artemis or the output sent back to the user once the connection is established. But one of the weak spots in the system is to ensure that you are actually connected to the right server. So-called 'Man-in-the-middle' attacks can reroute your connection through a third server which then works as a relay between you and your target, but listens and potentially alters data exchanged between the user and Artemis.
+
+This is why a digital fingerprint is provided when you log into a server. If you haven't logged on to the server before from your current computer, this fingerprint will be presented to you and you need to confirm its authenticity.
+```
+The authenticity of host 'ood.artemis.hrc.sussex.ac.uk (139.184.83.139)' can't be established.
+ED25519 key fingerprint is SHA256:PKwtJhSEWIKR6BpymogIcfp6TQGlItVUNqu9DeK7Ssw.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? 
+```
+
+Confirm this to complete the log-in. Now we have to verify that the presented fingerprint actually belongs to the target server we wanted to log into (and not to some 'man-in-the-middle' relay eavesdropping on our connection). To do so, simply type into the command line on the login server :-
+```
+[artemis]$ ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
+```
+
+It should present you an output like
+```
+256 SHA256:PKwtJhSEWIKR6BpymogIcfp6TQGlItVUNqu9DeK7Ssw root@artemis-login-0.local (ED25519)
+```
+
+In case that the server uses a different key type (e.g. created with another cryptographic algorithm like RSA or ECDSA), check the */etc/ssh* on the host for a public key with that algorithm in the name.
+
+Once you have logged in for the first time, this fingerprint will be stored on your local computer and you should never be asked about it again as long as the login server does not change (e.g. by reinstallation). If you want to display the fingerprint of the key used in a connection after your first login, you can simply add the option *-o VisualHostKey=yes* to your ssh call (on Linux/Unix) or use *ssh-keygen -l -F ood.artemis.hrc.sussex.ac.uk* to extract the fingerprint from your local known_host file.
+
+If the locally stored key differs with the one provided by the server on a login, you may see an error message like this:
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+SHA256:zELprgvBZmyQRQ5/6/a58e3e660bR3lJZItu18pnZcg.
+Please contact your system administrator.
+Add correct host key in $HOME/.ssh/known_hosts to get rid of this message.
+Offending RSA key in $HOME/.ssh/known_hosts:24
+RSA host key for ood.artemis.hrc.sussex.ac.uk has changed and you have requested strict checking.
+Host key verification failed.
+```
+If you are not aware of any reinstallation of the login servers that may have triggered this change of fingerprint, please be VERY cautious here and contact the support team of the system in question immediately. If you happen to know that the fingerprint has changed then follow the instructions and remove the fingerprint in question from the $HOME/.ssh/known_hosts file on your computer. When you log in know, the login server should be treated as a previously unknown server and you will be presented with the new fingerprint that you can then verify as described above. 
+
+### Exercises
+
+- check that the ssh key for Artemis stored in your system / returned by ssh on login matches the key on the Artemis login server
+
+
+## SSH key authentication
+
+This exercise covers how to generate an SSH key on your own machine that can then be used to authenticate your connection to a target machine like the Artemis login node. While SSH key generation does not require you to set a passphrase, for important security reason most HPC systems do require its users to only use keys protected with a reasonably strong passphrase. Users who are not obeying this may be held responsible for any damage caused as a result.
+
+### Windows
+
+If you are using a Windows desktop, you can use tools like PuTTygen, which is part of the PuTTY software package.
+
+Instructions for using PuTTygen can be found here.
+
+### Linux / macOS
+
+If you are using a Linux or macOS desktop then use the command
+```
+ssh-keygen -t rsa -b 4096
+```
+Try not to use less than 4096 bits to ensure that your key is strong enough.
+
+When prompted make sure you use a secure pass phrase. You should see output similar to:-
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key ($HOME/.ssh/id_rsa):
+Created directory ‘$HOME/.ssh’.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in $HOME/.ssh/id_rsa.
+Your public key has been saved in $HOME/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:2MTKd1MxNd40BLd8yY5HQrZJ/YgVBVMkL48b/Wp1A/w juser@server
+The key’s randomart image is:
++—[RSA 2048]—-+
+| o*@X=|
+| . ++BO+|
+| o o*oB=|
+| . = ..o*=o|
+| + S o .=oo|
+| . . . .E+|
+| ..+|
+| .. |
+| .. |
++—-[SHA256]—–+
+```
+You can find the private/public key pair at the location you defined at its creation. You can identify the public key by its suffix ‘.pub’. 
 
 
 ### Exercises
 
-
-
-## Create/Deploy/Use SSH keys
-
-### Background
-
-
-### Exercises
+- Generate a new ssh key pair that is protected by a passphrase
+- Find out how to use that keypair to log into Artemis instead of using your password (hint: there is a ''manual'' way, but also a useful command that you can run on your own machine to perform this more conveniently)
+- Find out how to add the ssh key to a key agent on your machine to avoid having to unlock it every time with the passphrase (many OS and their ssh clients already support that feature by default, so check if you can actually skip this step)
 
 
 ## Edit a simple text file
 
-### Background
 While more complex coding usually happens off the HPC systems, you will often have to make final tweaks to some code or configuration files. There are a number of different text editors usually available on most HPC systems.
 
 ### SSH
@@ -162,7 +251,5 @@ The commands to examine the partitions and associated job queues are called *sin
 - Show the nodes being currently used by (any) specific running job.
 - Show a summary of each of the queues.
 - Show all running & queued jobs for a (any) specific queue.
-
-
 
 
