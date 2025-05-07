@@ -23,7 +23,7 @@
     <li><a href="#advanced-batch-jobs">Advanced batch jobs</a></li>
     <li><a href="#first-openmp-program">First OpenMP Programm</a></li>
     <li><a href="#first-mpi-program">First MPI Programm</a></li>
-    <li><a href="#mini-challenge">Mini-challenge</a></li>
+    <li><a href="#final-challenge">Final challenge</a></li>
   </ol>
 </details>
 
@@ -373,7 +373,7 @@ Now you can write a job submission script that looks like:
 #!/usr/bin/env bash
 #
 #SBATCH --job-name=training_batch
-#SBATCH --partition=training.q
+#SBATCH --partition=discnet
 #SBATCH --cpus-per-task=1
 #SBATCH --time=1:00
 #SBATCH --output=test_%A_%a.out
@@ -416,4 +416,20 @@ Often we develop pipelines where a particular job must be launched only after pr
   sbatch --array [1-10] array-job.sh
   sbatch --dependency=afterok:jobid --array [11-20] array-job.sh
   ```
-  Check the status of your job on the queue. Did the first array of jobs work and has the second array run? 
+  Check the status of your job on the queue. Did the first array of jobs work and has the second array run?
+
+## Final challenge
+
+With all what you learned so far, you should be now able to compile, set up and run your first HPC simulation. We have picked GADGET-4, an N-Body cosmological simulation code.
+
+1. Download the latest version of GADGET-4 from <a href="https://wwwmpa.mpa-garching.mpg.de/gadget4/">here</a> onto Artemis (Tip: *git* is your friend ;))
+2. Locate the source code folder with the Makefile template & adapt the Makefile for the Artemis environment
+3. Identify all required modules and load them
+4. Successfully compile the GADGET-4
+5. You can find a parameter file and matching *Config.sh* for running a simulation in the tutorial folder: Exercises/HPC/Gadget-4
+6. Write your own submission script for a 64 core MPI run of your compiled GADGET-4 binary (don’t forget to load the modules here as well; hint: best store them in a configuration for that)
+7. Check if your simulations started successfully
+8. Now kill your simulation again (Do **NOT** skip this step!)
+9. ????
+10. Profit!!! (well, you mastered the content of the first day successfully ;))
+
