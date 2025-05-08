@@ -1,8 +1,0 @@
-You can find the measurements for the wall and cpu times for both the serial and parallelized codes in subfolders within this folder.
-
-(a) you should notice that the average wall time for 'f' remains constant when switching between the serial code, the multithreaded code and the code using multiprocessing. For 'g', the wall time for multihreading is doubled compared to the other modes. The reason for this is the same as previously discussed in ''All my threads'' i.e. that cpython does not allow for multiple threads to run on the interpreter simultaneously. 'f' gets around this as its numpy.exp functions runs in an external library, hence does not block the GIL for other concurrent threads.
-
-(b) the wall time for 'worker' is much larger than its cpu time. The reason for that is that the wall time also includes the time spent in the 'sleep' function call where the process was idle i.e. did not require any calculations on a cpu. The cpu time does not include this waiting/idle time.
-
-(c) 'g' has a larger (average) cpu time than its wall time. This is always a strong indicator for some multithreading (i.e. the process has spent time on multiple CPUs simultaneously). By comparing the tsub time (i.e. the total time spent in 'g' minus time spent in called subfunctions) and the ttot time for both the wall time and cpu time, we can notice that the difference is mostly caused by the called subfunctions. The profiler is not listing/profiling the subfunction in question i.e. math.exp explicitely, but since it is the only untraced subfunction, we can conclude that its implementation in the math module is using some form of multithreading.
-

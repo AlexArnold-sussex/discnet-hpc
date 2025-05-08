@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/jschewts/discnet-hpc">
-    <img src="images/discnet-logo.png" alt="Logo" height="100">
+    <img src=".images/discnet-logo.png" alt="Logo" height="100">
   </a>
 
   <h3 align="center">HPC Exercises</h3>
