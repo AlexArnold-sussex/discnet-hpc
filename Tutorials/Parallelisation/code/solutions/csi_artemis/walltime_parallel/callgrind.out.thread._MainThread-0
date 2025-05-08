@@ -1,0 +1,319 @@
+version: 1
+creator: yappi
+pid: 57960
+cmd:  time_trials_threading.py
+part: 1
+
+events: Ticks
+
+fl=(26) /usr/lib/python3.8/threading.py
+fl=(27) /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py
+fl=(30) time_trials_threading.py
+fl=(1) /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py
+fl=(42) /usr/lib/python3.8/threading.py
+fl=(43) /usr/lib/python3.8/threading.py
+fl=(59) time_trials_threading.py
+fl=(55) time_trials_threading.py
+fl=(45) /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/numeric.py
+fl=(47) <__array_function__ internals>
+fl=(14) /usr/lib/python3.8/threading.py
+fl=(17) /usr/lib/python3.8/threading.py
+fl=(20) /usr/lib/python3.8/threading.py
+fl=(3) /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py
+fl=(4) /usr/lib/python3.8/threading.py
+fl=(9) /usr/lib/python3.8/threading.py
+fl=(48) /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/multiarray.py
+fl=(62) /usr/lib/python3.8/threading.py
+fl=(10) /usr/lib/python3.8/threading.py
+fl=(6) /usr/lib/python3.8/threading.py
+fl=(12) /usr/lib/python3.8/_weakrefset.py
+fl=(21) /usr/lib/python3.8/threading.py
+fl=(18) /usr/lib/python3.8/threading.py
+fl=(33) /usr/lib/python3.8/threading.py
+fl=(24) /usr/lib/python3.8/threading.py
+fl=(15) /usr/lib/python3.8/threading.py
+fl=(5) /usr/lib/python3.8/threading.py
+fl=(8) /usr/lib/python3.8/threading.py
+fl=(11) /usr/lib/python3.8/threading.py
+fl=(32) /usr/lib/python3.8/threading.py
+fl=(66) /usr/lib/python3.8/_weakrefset.py
+
+fn=(26) Thread.run /usr/lib/python3.8/threading.py:859
+fn=(27) runall /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py:26
+fn=(30) worker time_trials_threading.py:11
+fn=(1) foreach /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py:10
+fn=(42) Thread.join /usr/lib/python3.8/threading.py:979
+fn=(43) Thread._wait_for_tstate_lock /usr/lib/python3.8/threading.py:1017
+fn=(59) g time_trials_threading.py:22
+fn=(55) f time_trials_threading.py:18
+fn=(45) ones /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/numeric.py:144
+fn=(47) copyto <__array_function__ internals>:2
+fn=(14) Thread.start /usr/lib/python3.8/threading.py:834
+fn=(17) Event.wait /usr/lib/python3.8/threading.py:540
+fn=(20) Condition.wait /usr/lib/python3.8/threading.py:270
+fn=(3) <listcomp> /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py:52
+fn=(4) Thread.__init__ /usr/lib/python3.8/threading.py:761
+fn=(9) Event.__init__ /usr/lib/python3.8/threading.py:505
+fn=(48) copyto /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/multiarray.py:1043
+fn=(62) Thread._stop /usr/lib/python3.8/threading.py:944
+fn=(10) Condition.__init__ /usr/lib/python3.8/threading.py:222
+fn=(6) current_thread /usr/lib/python3.8/threading.py:1306
+fn=(12) WeakSet.add /usr/lib/python3.8/_weakrefset.py:81
+fn=(21) Condition._is_owned /usr/lib/python3.8/threading.py:261
+fn=(18) Condition.__enter__ /usr/lib/python3.8/threading.py:246
+fn=(33) Condition.__exit__ /usr/lib/python3.8/threading.py:249
+fn=(24) Condition._release_save /usr/lib/python3.8/threading.py:255
+fn=(15) Event.is_set /usr/lib/python3.8/threading.py:513
+fn=(5) _newname /usr/lib/python3.8/threading.py:734
+fn=(8) _MainThread.daemon /usr/lib/python3.8/threading.py:1095
+fn=(11) _make_invoke_excepthook /usr/lib/python3.8/threading.py:1177
+fn=(32) Condition._acquire_restore /usr/lib/python3.8/threading.py:258
+fn=(66) _remove /usr/lib/python3.8/_weakrefset.py:38
+
+fl=(26)
+fn=(26)
+859 17
+cfl=(27)
+cfn=(27)
+calls=2 0
+0 34421628
+
+fl=(27)
+fn=(27)
+26 292
+cfl=(30)
+cfn=(30)
+calls=10 0
+0 34421316
+
+fl=(30)
+fn=(30)
+11 366
+cfl=(59)
+cfn=(59)
+calls=10 0
+0 8299360
+cfl=(55)
+cfn=(55)
+calls=10 0
+0 6070523
+cfl=(45)
+cfn=(45)
+calls=10 0
+0 29265
+
+fl=(1)
+fn=(1)
+10 24
+cfl=(42)
+cfn=(42)
+calls=2 0
+0 17220793
+cfl=(14)
+cfn=(14)
+calls=2 0
+0 495
+cfl=(3)
+cfn=(3)
+calls=1 0
+0 94
+
+fl=(42)
+fn=(42)
+979 12
+cfl=(43)
+cfn=(43)
+calls=2 0
+0 17220775
+cfl=(6)
+cfn=(6)
+calls=2 0
+0 5
+cfl=(15)
+cfn=(15)
+calls=2 0
+0 2
+
+fl=(43)
+fn=(43)
+1017 18
+cfl=(62)
+cfn=(62)
+calls=2 0
+0 18
+
+fl=(59)
+fn=(59)
+22 6880245
+
+fl=(55)
+fn=(55)
+18 6070523
+
+fl=(45)
+fn=(45)
+144 247
+cfl=(47)
+cfn=(47)
+calls=10 0
+0 28557
+
+fl=(47)
+fn=(47)
+2 176
+cfl=(48)
+cfn=(48)
+calls=10 0
+0 20
+
+fl=(14)
+fn=(14)
+834 18
+cfl=(17)
+cfn=(17)
+calls=2 0
+0 368
+cfl=(15)
+cfn=(15)
+calls=2 0
+0 2
+
+fl=(17)
+fn=(17)
+540 18
+cfl=(33)
+cfn=(33)
+calls=2 0
+0 5
+cfl=(20)
+cfn=(20)
+calls=2 0
+0 339
+cfl=(18)
+cfn=(18)
+calls=2 0
+0 6
+
+fl=(20)
+fn=(20)
+270 32
+cfl=(32)
+cfn=(32)
+calls=2 0
+0 3
+cfl=(24)
+cfn=(24)
+calls=2 0
+0 5
+cfl=(21)
+cfn=(21)
+calls=2 0
+0 6
+
+fl=(3)
+fn=(3)
+52 14
+cfl=(4)
+cfn=(4)
+calls=2 0
+0 80
+
+fl=(4)
+fn=(4)
+761 36
+cfl=(12)
+cfn=(12)
+calls=2 0
+0 9
+cfl=(11)
+cfn=(11)
+calls=2 0
+0 3
+cfl=(9)
+cfn=(9)
+calls=2 0
+0 21
+cfl=(8)
+cfn=(8)
+calls=2 0
+0 3
+cfl=(6)
+cfn=(6)
+calls=2 0
+0 5
+cfl=(5)
+cfn=(5)
+calls=2 0
+0 4
+
+fl=(9)
+fn=(9)
+505 9
+cfl=(10)
+cfn=(10)
+calls=2 0
+0 11
+
+fl=(48)
+fn=(48)
+1043 20
+
+fl=(62)
+fn=(62)
+944 14
+cfl=(8)
+cfn=(8)
+calls=2 0
+0 1
+
+fl=(10)
+fn=(10)
+222 11
+
+fl=(6)
+fn=(6)
+1306 7
+
+fl=(12)
+fn=(12)
+81 8
+
+fl=(21)
+fn=(21)
+261 4
+
+fl=(18)
+fn=(18)
+246 6
+
+fl=(33)
+fn=(33)
+249 4
+
+fl=(24)
+fn=(24)
+255 4
+
+fl=(15)
+fn=(15)
+513 4
+
+fl=(5)
+fn=(5)
+734 4
+
+fl=(8)
+fn=(8)
+1095 4
+
+fl=(11)
+fn=(11)
+1177 3
+
+fl=(32)
+fn=(32)
+258 2
+
+fl=(66)
+fn=(66)
+38 3

@@ -449,7 +449,7 @@ Often we develop pipelines where a particular job must be launched only after pr
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-## Your First OpenMP Program
+## First OpenMP Program
 
 In this example we will compile an OpenMP executable in an interactive shell and then submit a job to the batch queue.
 
@@ -524,7 +524,7 @@ In this example we will compile an OpenMP executable in an interactive shell and
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Your First MPI Program
+## First MPI Program
 
 In this example we will compile an MPI executable in an interactive shell and then submit a job to the batch queue.
 
@@ -557,7 +557,6 @@ In this example we will compile an MPI executable in an interactive shell and th
 
   The output should be similar to:
   ```
-  [bin]$ srun --mpi=pmi2 mpi.exe
   Hello world from process 0 of 6
   Hello world from process 1 of 6
   Hello world from process 2 of 6

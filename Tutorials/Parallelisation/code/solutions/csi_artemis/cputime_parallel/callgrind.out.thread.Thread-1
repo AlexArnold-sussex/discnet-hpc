@@ -1,0 +1,85 @@
+version: 1
+creator: yappi
+pid: 58020
+cmd:  time_trials_threading.py
+part: 1
+
+events: Ticks
+
+fl=(26) /usr/lib/python3.8/threading.py
+fl=(27) /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py
+fl=(30) time_trials_threading.py
+fl=(59) time_trials_threading.py
+fl=(56) time_trials_threading.py
+fl=(45) /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/numeric.py
+fl=(47) <__array_function__ internals>
+fl=(48) /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/multiarray.py
+
+fn=(26) Thread.run /usr/lib/python3.8/threading.py:859
+fn=(27) runall /home/schewtsj/Documents/lectures-icg/HPC lectures 2021/Day 2/Exercises/Exercises/csi_sciama/helper.py:26
+fn=(30) worker time_trials_threading.py:11
+fn=(59) g time_trials_threading.py:22
+fn=(56) f time_trials_threading.py:18
+fn=(45) ones /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/numeric.py:144
+fn=(47) copyto <__array_function__ internals>:2
+fn=(48) copyto /home/schewtsj/.local/lib/python3.8/site-packages/numpy/core/multiarray.py:1043
+
+fl=(26)
+fn=(26)
+859 10
+cfl=(27)
+cfn=(27)
+calls=1 0
+0 9839406
+
+fl=(27)
+fn=(27)
+26 234
+cfl=(30)
+cfn=(30)
+calls=5 0
+0 9839152
+
+fl=(30)
+fn=(30)
+11 173
+cfl=(59)
+cfn=(59)
+calls=5 0
+0 6908571
+cfl=(56)
+cfn=(56)
+calls=5 0
+0 2917219
+cfl=(45)
+cfn=(45)
+calls=5 0
+0 12839
+
+fl=(59)
+fn=(59)
+22 3848775
+
+fl=(56)
+fn=(56)
+18 2917219
+
+fl=(45)
+fn=(45)
+144 156
+cfl=(47)
+cfn=(47)
+calls=5 0
+0 12506
+
+fl=(47)
+fn=(47)
+2 85
+cfl=(48)
+cfn=(48)
+calls=5 0
+0 15
+
+fl=(48)
+fn=(48)
+1043 15
