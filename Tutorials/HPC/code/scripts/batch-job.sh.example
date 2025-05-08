@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+#SBATCH --job-name=training_batch
+#SBATCH --output=training/logs/batch.log.%j
+#SBATCH --error=training/logs/batch.err.%j
+#SBATCH --partition=discnet
+#SBATCH --ntasks=1
+#SBATCH --time=1:00
+
+echo $SLURM_JOB_NAME
+echo "Current working directory is `pwd`"
+echo "Starting run at: `date`"
+
+module purge
+module load R
+
+srun R -f training/src/square.r
+
+# output how and when job finished
+echo "Program finished with exit code $? at: `date`"
+# end of jobscript
+

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+#SBATCH --job-name=training_mpi
+#SBATCH --output=training/logs/mpi.log.%j
+#SBATCH --partition=discnet
+#SBATCH --ntasks=12
+#SBATCH --time=1:00
+
+module purge
+module load intel
+module load OpenMPI
+
+srun --mpi=pmi2 training/bin/mpi.exe
+#mpirun training/bin/mpi.exe

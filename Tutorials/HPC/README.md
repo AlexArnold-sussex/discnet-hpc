@@ -55,6 +55,7 @@ ood.artemis.hrc.sussex.ac.uk
 | :-----------: |
 | **IMPORTANT:** While access via a remote CLI shell (e.g. via *ssh*/*sftp*) is quite common for HPC systems, web interfaces like Open OnDemand are still far less common. Hence, for all the following exercises, try to find the solution using just *ssh* as well, even if the GUI provides you with it in a more convenient way here on Artemis. |
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Verify Server
 
@@ -80,7 +81,11 @@ It should present you an output like
 
 In case that the server uses a different key type (e.g. created with another cryptographic algorithm like RSA or ECDSA), check the */etc/ssh* on the host for a public key with that algorithm in the name.
 
-Once you have logged in for the first time, this fingerprint will be stored on your local computer and you should never be asked about it again as long as the login server does not change (e.g. by reinstallation). If you want to display the fingerprint of the key used in a connection after your first login, you can simply add the option *-o VisualHostKey=yes* to your ssh call (on Linux/Unix) or use *ssh-keygen -l -F ood.artemis.hrc.sussex.ac.uk* to extract the fingerprint from your local known_host file.
+Once you have logged in for the first time, this fingerprint will be stored on your local computer and you should never be asked about it again as long as the login server does not change (e.g. by reinstallation). If you want to display the fingerprint of the key used in a connection after your first login, you can simply add the option *-o VisualHostKey=yes* to your ssh call (on Linux/Unix) or use
+```
+ssh-keygen -l -F ood.artemis.hrc.sussex.ac.uk
+```
+to extract the fingerprint from your local known_host file.
 
 If the locally stored key differs with the one provided by the server on a login, you may see an error message like this:
 ```
@@ -104,6 +109,7 @@ If you are not aware of any reinstallation of the login servers that may have tr
 
 - check that the ssh key for Artemis stored in your system / returned by ssh on login matches the key on the Artemis login server
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## SSH key authentication
 
@@ -157,6 +163,7 @@ You can find the private/public key pair at the location you defined at its crea
 - Find out how to use that keypair to log into Artemis instead of using your password (hint: there is a ''manual'' way, but also a useful command that you can run on your own machine to perform this more conveniently)
 - Find out how to add the ssh key to a key agent on your machine to avoid having to unlock it every time with the passphrase (many OS and their ssh clients already support that feature by default, so check if you can actually skip this step)
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Edit a simple text file
 
@@ -196,8 +203,9 @@ Linux applications often use (hidden) dot files. These are files located in your
   ```
   Do you see a difference in your prompt?
 
-  NB: The cd command by itself returns you to $HOME (i.e. home directory). 
+- log out and in again. Do you see the same changes now? Why not and how can you make sure that these changes are applied on log in as well (hint: check for a second hidden bashrc config file in your home directory and find out what it is for)?
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # SOFTWARE
 
@@ -210,7 +218,7 @@ module help
 To see all available modules or packages try:
 module av
 
-### Exercises
+### Exercise
 
 - Try running the statistical computing environment called “R” . Type the following on the command line:
   ```
@@ -232,7 +240,9 @@ module av
   Check this before and after loading/unloading the module.
 - Now try running R from the command line again. This time the “R” environment should start. Use quit() to close it and to return to your shell.
 - Log out and log back in. Trying running R again. You will notice that R is missing from your $PATH again.
-- Check the module man page (man module) or help page (module help) to find the command that will save your current collection as a default and makes it available again every time you log in (hint: you will have to add the command to restore it to your *.bash_profile* to trigger it)
+- Check the module man page (man module) or help page (module help) to find the command that will save your current collection as a default and makes it available again to be restored every time you log in (hint: check a previous exercise on where to make those changes)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 # JOB HANDLING
@@ -241,16 +251,28 @@ module av
 
 The login servers are configured to run relatively small programs. These include editors, browsers, small compilations etc. Larger programs must be executed on a compute node (or compute server). Work is submitted to the compute nodes as a "job" via a "queue". Once a job is submitted the "scheduler" and "resource" managers will start the job on the most suitable compute node(s) when appropriate. Often this is immediate but if the load is heavy the job will be "queued" to be executed at a later time when the required resources become available. Each partition has its own queue.
 
-### Exercises
+### Exercise
 
-The commands to examine the partitions and associated job queues are called *sinfo* and *squeue*. Additionally, *sstat* can be used to display various status information of a running job. Use their man pages to find out how to do the following:
+The commands to examine the partitions and associated job queues are called *sinfo* and *squeue* (hint: <a href="https://curc.readthedocs.io/en/latest/running-jobs/squeue-status-codes.html">this page here</a> summarizes all Job States and Reasons and may be very useful)<a. Additionally, *sstat* can be used to display various status information of a running job and *sacct* to inspect any jobs that finished in the past. Use their man pages to find out how to do the following:
 
 - Find out the state of the nodes in each partition (are there any dysfunctional nodes? If so, what are the reasons?)
-- Show all running jobs.
-- Show all queued jobs just for a specific user.
-- Show the nodes being currently used by (any) specific running job.
-- Show a summary of each of the queues.
-- Show all running & queued jobs for a (any) specific queue.
+- Show all running jobs
+- Show all queued jobs just for a specific user (e.g. you)
+- Show all past jobs run on Artemis by a specific user and check whether they completed successfully, the walltime and the maximum amount of memory used by that job. Your output should look like this:
+  ```
+  JobID           JobName      User  Partition     MaxRSS MaxRSSNode    Elapsed    CPUTime      State 
+  ------------ ---------- --------- ---------- ---------- ---------- ---------- ---------- ---------- 
+  1061361            bash    js2347    general                         00:02:01   00:04:02  COMPLETED 
+  1061361.ext+     extern                               0 artemis-a+   00:02:01   00:04:02  COMPLETED 
+  1061361.0          bash                          81372K artemis-a+   00:01:59   00:03:58  COMPLETED
+  ```
+- Show the nodes being currently used by (any) specific running job
+- Show a summary of each of the queues
+- Show all running & queued jobs for a (any) specific queue
+
+*Remark*: Some of these task can also be done on Artemis using the OpenOnDemand web portal (so try to use for this as well), But in general, you won't have such GUIs available, henceit is important to know how to use these CLI tools.  
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Run an interactive job
 
@@ -312,8 +334,9 @@ In this exercise we will run some simple “R” commands interactively on a com
 
 - Exit from the interactive shell by typing exit or EOF/EOT interrupt via CTRL-D.
 
-- Repeat requesting an interactive shell, but this time use *screen* to keep the request open while you log out of Artemis, log back in again and recover that screen.
+- Repeat requesting an interactive shell, but this time use *screen* to keep the request open while you clone the terminal you are logged in with, log back in again and recover that screen (hint: instead of simply closing the shell, you can also log out properly, but you have to make sure to *detach*, **NOT** terminate the screen then)
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Submit a batch job
 
@@ -337,6 +360,8 @@ srun R -f training/src/square.r
 
 # output how and when job finished
 echo "Program finished with exit code $? at: `date`"
+# wait for a few more seconds before closing this job (to make it easier for you to observe it; do not use in production)
+sleep 10
 # end of jobscript
 ```
 The job will create an output file and an error file. These will be created in the working directory by default.
@@ -355,6 +380,7 @@ The job will create an output file and an error file. These will be created in t
 
 - Release the job (hint: *scontrol*) and confirm it runs.
 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Advanced batch jobs
 
@@ -381,6 +407,8 @@ Now you can write a job submission script that looks like:
 
 echo $SLURM_JOB_NAME
 echo $SLURM_ARRAY_TASK_ID
+# wait for a random amount of time up to 10 seconds
+sleep $((RANDOM % 10))
 ```
 
 ### Dependencies
@@ -391,7 +419,7 @@ Often we develop pipelines where a particular job must be launched only after pr
   --dependency=afternotok:<job_id>. Submitted job will be launched if and only if job with job_id identifier failed. If job_id is a job array, then at least one job in that array failed. This option may be useful for cleanup step.
   --dependency=afterany:<job_id>. Submitted job wil be launched after job with job_id identifier terminated i.e. completed successfully or failed.
 
-### Exercises
+### Exercise
 
 - Copy and paste the above example into a file called “array-job.sh” in your $HOME. Submit the job:
   ```
@@ -418,18 +446,153 @@ Often we develop pipelines where a particular job must be launched only after pr
   ```
   Check the status of your job on the queue. Did the first array of jobs work and has the second array run?
 
-## Final challenge
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+## Your First OpenMP Program
+
+In this example we will compile an OpenMP executable in an interactive shell and then submit a job to the batch queue.
+
+### Exercise
+
+- Create an interactive jobs with 6 cores allocated on the same node by executing the following command:
+  ```
+  srun -p discnet --ntasks=1 --cpus-per-task=6 --pty bash
+  ```
+- Now select the modules you will need for this exercise:-
+  ```
+  $ module purge; module load system/intel64 intel_comp/2019.2
+  ```
+  From the command line check which modules this has loaded (*module list*). Now change into the “$HOME/training/src” directory and look at the file “openmp.c” . Try to understand the structure of the code.
+
+- Compile this file and create an executable to be stored in the “bin” directory:
+  ```
+  $ icc -fopenmp -o ../bin/openmp.exe openmp.c
+  ```
+  Check that you now have an openmp.exe in the bin directory.
+
+- Try to the program using the 6 cores we have allocated:
+  ```
+  cd $HOME/training/bin; ./openmp.exe
+  ```
+  The output should be similar to:
+
+  ```
+  Hello World from thread = 0
+  Hello World from thread = 2
+  Number of threads = 16
+  Hello World from thread = 5
+  Hello World from thread = 13
+  Hello World from thread = 1
+  Hello World from thread = 4
+  Hello World from thread = 6
+  Hello World from thread = 8
+  Hello World from thread = 9
+  Hello World from thread = 12
+  Hello World from thread = 10
+  Hello World from thread = 11
+  Hello World from thread = 14
+  Hello World from thread = 3
+
+  All threads finished. Back to single thread.
+  ```
+
+- Notice that the program actually used more than 6 cores. By default, OpenMP is trying to use all cores available on the same node. Thus we need to be able to limit the number of cores used. Set the following environmental variable and rerun the program:
+  ```
+  $ export OMP_NUM_THREADS=6; ./openmp.exe
+  ```
+  The output should now be something like:
+  ```
+  Hello World from thread = 0
+  Number of threads = 6
+  Hello World from thread = 5
+  Hello World from thread = 3
+  Hello World from thread = 2
+  Hello World from thread = 1
+  Hello World from thread = 4
+
+  All threads finished. Back to single thread.
+  ```
+  Exit from the interactive shell back onto the login node. Check that you are in your home directory ( cd ).
+
+- Submit the same program as a batch job. Using the knowledge from the previous exercises, try to write your own batch script to do so and store it in “training/scripts/” (hint: if you get stuck, you can find a commented solution in “training/scripts/openmp-job.sh.solution“). Now submit the job:
+  ```
+  $ sbatch training/scripts/openmp-job.sh
+  ```
+
+- Use *squeue* to monitor the job. When the job has completed locate and examine the output file(s). The contents of the output files should be similar to the interactive output.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Your First MPI Program
+
+In this example we will compile an MPI executable in an interactive shell and then submit a job to the batch queue.
+
+### Exercise
+
+- Create an interactive shell with 6 cores, but instead of *srun* use *salloc* (this allows us to then use srun to bootstrap the mpi processes on the allocated nodes; notice that the new shell is still running on the login node, but anything you start with the *srun* command will run on the compute nodes!)
+  ```
+  $ salloc --ntasks=6 -p discnet
+  ```
+  All allocated cores are not necessary on the same node as the shell you are provided with now. Try to find out if/which other nodes are used as well (hint: squeue).
+
+- Now select the modules you will need for this exercise:
+  ```
+  module purge; module load intel OpenMPI
+  ```
+  From the command line confirm that all the requested modules have been successfully loaded (hint: module list).
+
+- Now change into the “$HOME/training/src” directory and look at the file "mpi.c" . Try to understand the structure of the code.
+  We will now compile this file and create an executable to be stored in the "bin" directory:
+  ```
+  $ mpicc mpi.c -o ../bin/mpi.exe
+  ```
+  Ignore any warnings. Check that you now have an mpi.exe in the bin directory.
+
+- We will now run the program using all 6 cores we have allocated:
+  ```
+  $ cd $HOME/training/bin; srun --mpi=pmi2 mpi.exe
+  ```
+  On slurm, srun should be used instead of mpirun that usually does the bootstrapping of the processes across the allocated nodes. Also notice that we haven’t told srun explicitly to use our 6 cores. If no number of tasks is specified, it uses all allocated cores automatically.
+
+  The output should be similar to:
+  ```
+  [bin]$ srun --mpi=pmi2 mpi.exe
+  Hello world from process 0 of 6
+  Hello world from process 1 of 6
+  Hello world from process 2 of 6
+  Hello world from process 3 of 6
+  Hello world from process 4 of 6
+  Hello world from process 5 of 6
+  ```
+  Once finished, exit from the interactive job back onto the login node. Check that you are in your home directory (cd).
+
+- We will now submit the same program as a batch job. Again, using the knowledge from the previous exercises, try to write your own batch script to do so and store it in "training/scripts/" (hint: if you get stuck, you can find a commented solution in "training/scripts/mpi-job.sh.solution"). Then submit the job:
+  ```
+  $ sbatch training/scripts/mpi-job.sh
+  ```
+  Use squeue to check the status of the job. When the job has completed locate and examine the output file.
+  The contents of the output file should be similar to the interactive output.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+# FINAL CHALLENGE
+
+## Your first HPC simulation
 
 With all what you learned so far, you should be now able to compile, set up and run your first HPC simulation. We have picked GADGET-4, an N-Body cosmological simulation code.
 
+## Exercise
+
 1. Download the latest version of GADGET-4 from <a href="https://wwwmpa.mpa-garching.mpg.de/gadget4/">here</a> onto Artemis (Tip: *git* is your friend ;))
-2. Locate the source code folder with the Makefile template & adapt the Makefile for the Artemis environment
+2. Locate the source code folder with the Makefile/Config template, adapt the Makefile for the Artemis environment as use the Config template as it is.
 3. Identify all required modules and load them
-4. Successfully compile the GADGET-4
-5. You can find a parameter file and matching *Config.sh* for running a simulation in the tutorial folder: Exercises/HPC/Gadget-4
+4. Successfully compile the GADGET-4 binary
+5. You can find a parameter file for running a simulation in the tutorial folder: Exercises/HPC/Gadget-4
 6. Write your own submission script for a 64 core MPI run of your compiled GADGET-4 binary (don’t forget to load the modules here as well; hint: best store them in a configuration for that)
 7. Check if your simulations started successfully
 8. Now kill your simulation again (Do **NOT** skip this step!)
 9. ????
-10. Profit!!! (well, you mastered the content of the first day successfully ;))
+10. Profit!!! (well, you may not have achieved demi-godhood now, but mastered the content of the first day successfully. Congratulation :))
 
+<p align="right">(<a href="#top">back to top</a>)</p>
