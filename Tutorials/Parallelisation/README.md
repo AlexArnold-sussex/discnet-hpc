@@ -6,7 +6,7 @@
   <h3 align="center">Parallelisation Exercises</h3>
   <p align="center">
     In these exercises, you will apply the various techniques and paradigms for code parallelization that were previously introduced in the lectures. For this purpose, you are given several serial codes to be parallized. You will also find intermediate solutions for each exercise in the solutions folder provided to you. While these can be used to allow you to progress within the exercise when getting stuck at a part of it, we highly recommend to only use them as a last resort as the attempt of finding the solution yourself is a significant part of the learning process. All codes can be found in the discnet-hpc repo
-For working on the exercises on Artemis, you additionally need to load the following modules: intel, OpenMPI, Python
+For working on the exercises on Artemis, you additionally need to load the following modules: intel, OpenMPI, Python, CUDAcore
   </p>
 </div>
 <!-- TABLE OF CONTENTS -->
