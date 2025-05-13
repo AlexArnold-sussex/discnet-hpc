@@ -33,6 +33,15 @@ tion) [C]</a></li>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+# Numba 5 ... is alive! [Python]
+
+- Study the code in file *Exercises/numba_5/numba.py*; use Numba jit \& vectorize the two functions inside respectively and then run the code to benchmark it. Which combination out of the 5 combinations (vanilla, vec, jit, jit+jit, vec+jit) is the fastest?
+- What happens to benchmarks if you comment in that single line that calls *collect_data* and *learn* ahead of the benchmarking code? Why?
+- set N=2000 and repeat the benchmarking for *collect_data* and compare vanilla, vec & jit again (hint: comment out the calls of learn to avoid waiting for too long). What has changed?
+
+- (Bonus) Adapt *collect_data* to run on a GPU instead using numba/cuda
+
+
 # All My Threads [C,Python]
 
 - Run the python program time trials.py in Exercises/all threads/. What do you notice in the output? Can you explain it?
