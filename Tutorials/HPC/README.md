@@ -276,7 +276,7 @@ The commands to examine the partitions and associated job queues are called *sin
 
 ## Run an interactive job
 
-In this exercise we will run some simple “R” commands interactively on a compute node. Please read the related article HERE on how to run interactive jobs on SCIAMA-4.
+In this exercise we will run some simple “R” commands interactively on a compute node.
 
 ### Exercises
 - First we need to allocate resources (here 1 task/core by default) on a compute node and run a shell on it:
