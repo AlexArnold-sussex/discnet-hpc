@@ -293,7 +293,7 @@ In this exercise we will run some simple “R” commands interactively on a com
 
 - Ensure you have the “R” module loaded in this shell. If not, then load it as you have learned in a previous exercise.
 
-- In the terminal run the R program. Execute the following commands (a file with these command can be found in the training/scripts directory):
+- In the terminal run the R program. Execute the following commands (a file with these command can be found in the discnet-hpc/Tutorials/HPC/Code/scripts directory):
   ```
   Square <- function(x)
   { return(x^2) }
@@ -473,7 +473,7 @@ In this example we will compile an OpenMP executable in an interactive shell and
 
 - Try to the program using the 6 cores we have allocated:
   ```
-  cd $HOME/training/bin; ./openmp.exe
+  cd $HOME/discnet-hpc/Tutorials/HPC/Code/bin; ./openmp.exe
   ```
   The output should be similar to:
 
@@ -515,9 +515,9 @@ In this example we will compile an OpenMP executable in an interactive shell and
   ```
   Exit from the interactive shell back onto the login node. Check that you are in your home directory ( cd ).
 
-- Submit the same program as a batch job. Using the knowledge from the previous exercises, try to write your own batch script to do so and store it in “training/scripts/” (hint: if you get stuck, you can find a commented solution in “training/scripts/openmp-job.sh.solution“). Now submit the job:
+- Submit the same program as a batch job. Using the knowledge from the previous exercises, try to write your own batch script to do so and store it in “discnet-hpc/Tutorials/HPC/Code/scripts/” (hint: if you get stuck, you can find a commented solution in “discnet-hpc/Tutorials/HPC/Code/scripts/openmp-job.sh.solution“). Now submit the job:
   ```
-  $ sbatch training/scripts/openmp-job.sh
+  $ sbatch discnet-hpc/Tutorials/HPC/Code/scripts/openmp-job.sh
   ```
 
 - Use *squeue* to monitor the job. When the job has completed locate and examine the output file(s). The contents of the output files should be similar to the interactive output.
@@ -542,7 +542,7 @@ In this example we will compile an MPI executable in an interactive shell and th
   ```
   From the command line confirm that all the requested modules have been successfully loaded (hint: module list).
 
-- Now change into the “$HOME/training/src” directory and look at the file "mpi.c" . Try to understand the structure of the code.
+- Now change into the “$HOME/discnet-hpc/Tutorials/HPC/Code/src” directory and look at the file "mpi.c" . Try to understand the structure of the code.
   We will now compile this file and create an executable to be stored in the "bin" directory:
   ```
   $ mpicc mpi.c -o ../bin/mpi.exe
@@ -551,7 +551,7 @@ In this example we will compile an MPI executable in an interactive shell and th
 
 - We will now run the program using all 6 cores we have allocated:
   ```
-  $ cd $HOME/training/bin; srun --mpi=pmi2 mpi.exe
+  $ cd $HOME/discnet-hpc/Tutorials/HPC/Code/bin; srun --mpi=pmi2 mpi.exe
   ```
   On slurm, srun should be used instead of mpirun that usually does the bootstrapping of the processes across the allocated nodes. Also notice that we haven’t told srun explicitly to use our 6 cores. If no number of tasks is specified, it uses all allocated cores automatically.
 
@@ -566,9 +566,9 @@ In this example we will compile an MPI executable in an interactive shell and th
   ```
   Once finished, exit from the interactive job back onto the login node. Check that you are in your home directory (cd).
 
-- We will now submit the same program as a batch job. Again, using the knowledge from the previous exercises, try to write your own batch script to do so and store it in "training/scripts/" (hint: if you get stuck, you can find a commented solution in "training/scripts/mpi-job.sh.solution"). Then submit the job:
+- We will now submit the same program as a batch job. Again, using the knowledge from the previous exercises, try to write your own batch script to do so and store it in "discnet-hpc/Tutorials/HPC/Code/scripts/" (hint: if you get stuck, you can find a commented solution in "discnet-hpc/Tutorials/HPC/Code/scripts/mpi-job.sh.solution"). Then submit the job:
   ```
-  $ sbatch training/scripts/mpi-job.sh
+  $ sbatch discnet-hpc/Tutorials/HPC/Code/scripts/mpi-job.sh
   ```
   Use squeue to check the status of the job. When the job has completed locate and examine the output file.
   The contents of the output file should be similar to the interactive output.
