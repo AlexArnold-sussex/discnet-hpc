@@ -356,7 +356,7 @@ echo "Starting run at: `date`"
 module purge
 module load R
 
-srun R -f training/src/square.r
+srun R -f discnet-hpc/Tutorials/HPC/Code/src/square.r
 
 # output how and when job finished
 echo "Program finished with exit code $? at: `date`"
