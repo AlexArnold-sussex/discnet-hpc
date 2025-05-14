@@ -538,7 +538,7 @@ In this example we will compile an MPI executable in an interactive shell and th
 
 - Now select the modules you will need for this exercise:
   ```
-  module purge; module load intel OpenMPI
+  module purge; module load intel/2022a OpenMPI/4.1.4-GCC-11.3.0 
   ```
   From the command line confirm that all the requested modules have been successfully loaded (hint: module list).
 
