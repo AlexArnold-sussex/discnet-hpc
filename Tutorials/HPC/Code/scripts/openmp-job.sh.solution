@@ -7,7 +7,8 @@
 #SBATCH --cpus-per-task=12
 #SBATCH --time=1:00
 
+module load intel/2022a
+
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
 
 srun training/bin/openmp.exe
-

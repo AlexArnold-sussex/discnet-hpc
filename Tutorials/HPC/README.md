@@ -584,10 +584,10 @@ With all what you learned so far, you should be now able to compile, set up and 
 ## Exercise
 
 1. Download the latest version of GADGET-4 from <a href="https://wwwmpa.mpa-garching.mpg.de/gadget4/">here</a> onto Artemis (Tip: *git* is your friend ;))
-2. Locate the source code folder with the Makefile/Config template, adapt the Makefile for the Artemis environment as use the Config template as it is.
+2. Locate the gadget-4 folder with the Makefile.systype template, use it as your Makefile.systype and adapt it for the Artemis environment. Also copy the *Config.sh* that can be found in the *example/DM-L50-N128* subfolder into this same directory.
 3. Identify all required modules and load them
 4. Successfully compile the GADGET-4 binary
-5. You can find a parameter file for running a simulation in the tutorial folder: Exercises/HPC/Gadget-4
+5. You can find a parameter file and output list file for running a simulation in the same exercise folder you found in the Config.sh in (both have to be in the current working directory when you invoke the Gadget4 binary)
 6. Write your own submission script for a 64 core MPI run of your compiled GADGET-4 binary (don’t forget to load the modules here as well; hint: best store them in a configuration for that)
 7. Check if your simulations started successfully
 8. Now kill your simulation again (Do **NOT** skip this step!)
