@@ -461,7 +461,7 @@ In this example we will compile an OpenMP executable in an interactive shell and
   ```
 - Now select the modules you will need for this exercise:-
   ```
-  $ module purge; module load system/intel64 intel_comp/2019.2
+  $ module purge; module load intel/2022a
   ```
   From the command line check which modules this has loaded (*module list*). Now change into the “$HOME/training/src” directory and look at the file “openmp.c” . Try to understand the structure of the code.
 
