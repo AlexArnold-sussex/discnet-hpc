@@ -463,7 +463,7 @@ In this example we will compile an OpenMP executable in an interactive shell and
   ```
   $ module purge; module load intel/2022a
   ```
-  From the command line check which modules this has loaded (*module list*). Now change into the “$HOME/training/src” directory and look at the file “openmp.c” . Try to understand the structure of the code.
+  From the command line check which modules this has loaded (*module list*). Now change into the “$HOME/discnet-hpc/Tutorials/HPC/Code/src” directory and look at the file “openmp.c” . Try to understand the structure of the code.
 
 - Compile this file and create an executable to be stored in the “bin” directory:
   ```
