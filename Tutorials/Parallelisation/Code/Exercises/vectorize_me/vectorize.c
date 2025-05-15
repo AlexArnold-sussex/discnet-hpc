@@ -4,12 +4,12 @@
 #include <limits.h>
 #include <unistd.h>
 
-#define N 70000
+#define N 100000
 
 void test(float* A, const float* B) {
    printf("Test function\n");
 
-   for (int j = 0; j < 10; j++) {
+   for (int j = 0; j < N/1000; j++) {
      #pragma omp simd
      for (int i = 0; i < N; i++) {
        A[i] = A[i] + B[i];
@@ -36,17 +36,15 @@ int main(){
             B[j] = C + A[j];
    }
 
-   printf("(%e,%e)\n", A[2],B[2]);
-
    clock_t t1 = clock() - t;
-   printf("Time elapsed (init) is %e seconds (%d,%e)\n", ((double) t1) / CLOCKS_PER_SEC , N, A[2]);
+   printf("Time elapsed (init) is %e seconds (%e,%e)\n", ((double) t1) / CLOCKS_PER_SEC , N, A[2]);
 
    // calculate result
    test(A,B);
 
    t = clock() - t - t1;
-   printf("Time elapsed (test) is %e seconds (%d,%e)\n", ((double) t) / CLOCKS_PER_SEC , N, A[2]);
-
+   printf("Time elapsed (test) is %e seconds (%e,%e)\n", ((double) t) / CLOCKS_PER_SEC , N, A[2]);
+   printf("Time elapsed (total) is %e seconds\n", ((double) (t + t1)) / CLOCKS_PER_SEC);
    return 0;
 
 }
