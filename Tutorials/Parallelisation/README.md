@@ -99,9 +99,9 @@ There are also unfinished MPI/multiprocessing programs in both Python and C (*mu
 
 - Try to complete these programs by adding the communication part to have each process compare its variable with its neighbouring rank(s) to determine if the generated variables are ordered. Gather/Reduce the results at the end to have a definite answer on how many are ordered in the root process. (Try out both blocking and non-blocking communication if possible)
 
-# CSI: Sciama [Python]
+# CSI: Artemis [Python]
 
-Let us return to the ''crime scene'' that we had already analysed in ''All My Threads'', but this time we run a more sophisticated analysis than just measuring the wall time as done before. For that, we are now using the profiler yappi to study the behaviour of various functions within the versions of the source code located in the *Code/Exercises/csi_sciama* subfolder.
+Let us return to the ''crime scene'' that we had already analysed in ''All My Threads'', but this time we run a more sophisticated analysis than just measuring the wall time as done before. For that, we are now using the profiler yappi to study the behaviour of various functions within the versions of the source code located in the *Code/Exercises/csi_artemis* subfolder.
 
 - Study how the profiler is embedded into the multiprocessing and multithreading code found in time trials multiprocessing.py and time trials threading.py respectively.
 - Run both codes for 2 threads/processes and measure the average time (tavg) spent in functions f and g. Compare this to the time you measure when running the code without parallelisation (i.e. use 1 thread). Do this for both ’wall time’ and ’cpu time’ (check yappi online documentation on how to switch between these settings). Have a look in particular at the following cases and try to explain your findings (based on your knowledge of the source code):
