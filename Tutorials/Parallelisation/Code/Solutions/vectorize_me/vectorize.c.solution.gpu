@@ -9,11 +9,16 @@
 void test(float* A, const float* B) {
    printf("Test function\n");
 
+   // make sure to map the memory here to avoid unnecessary I/O from copy data back and forth
+   // inside the outer loop when spawning the kernels
+   #pragma omp target data map(to: B[0:N]) map(tofrom: A[0:N])
+   {
    for (int j = 0; j < N/10; j++) {
-     #pragma omp simd
-     for (int i = 0; i < N; i++) {
+     #pragma omp target teams distribute parallel for num_teams(100)
+     for (int i = 0;i < N; i++) {
        A[i] = A[i] + B[i];
      }
+   }
    }
 }
 
@@ -32,7 +37,6 @@ int main(){
 	B[0] = 0.0;
    for (int i = 0; i < N; i++){
         float C = B[i];
-	#pragma omp simd
         for (int j = 0; j < i; j++)
             B[j] = C + A[j];
    }

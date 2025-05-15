@@ -6,7 +6,7 @@
   <h3 align="center">Parallelisation Exercises</h3>
   <p align="center">
     In these exercises, you will apply the various techniques and paradigms for code parallelization that were previously introduced in the lectures. For this purpose, you are given several serial codes to be parallized. You will also find intermediate solutions for each exercise in the solutions folder provided to you. While these can be used to allow you to progress within the exercise when getting stuck at a part of it, we highly recommend to only use them as a last resort as the attempt of finding the solution yourself is a significant part of the learning process. All codes can be found in the discnet-hpc repo
-For working on the exercises on Artemis, you additionally need to load the following modules: intel, OpenMPI, Python, CUDAcore
+For working on the exercises on Artemis, you additionally need to load the following modules: intel/2022a, OpenMPI/4.1.4-GCC-11.3.0, Python/3.10.4-GCCcore-11.3.0, CUDAcore/11.1.1
   </p>
 </div>
 <!-- TABLE OF CONTENTS -->
@@ -27,9 +27,10 @@ tion) [C]</a></li>
 
 # Vectorize Me If You Can [C]
 
-- Study the content of the folder *Exercises/vectorize_me/*. It contains a simple C program and a Makefile to compile this program using no vectorization (make no-vec), auto-vectorization (make auto-vec) and explicit OpenMP vectorization (make omp-vec). Compiling the program using the Makefile creates both a binary (vectorize) and a detailed optimization report (vectorize.optrpt). Compare the results obtained from the different versions. Also have a look at the optimization reports. Can you explain the observed differences in the run times?
+- Study the content of the folder *Code/Exercises/vectorize_me/*. It contains a simple C program and a Makefile to compile this program using no vectorization (make no-vec), auto-vectorization (make auto-vec) and explicit OpenMP vectorization (make omp-vec). Compiling the program using the Makefile creates both a binary (vectorize) and a detailed optimization report (vectorize.optrpt). Compare the results obtained from the different versions. Also have a look at the optimization reports. Can you explain the observed differences in the run times?
+- Modify the code to get a similar speed-up for explicit OpenMP SIMD as you get for auto-vectorization (you won't match autovec here, but you should get an additional speed-up compared to the original omp-vec binary)
 
-- (Bonus) Modify the code to get a similar speed-up for explicit OpenMP SIMD as you get for auto-vectorization
+- (Bonus) Can you adapt the code to offload the code in the work function to the GPU instead?
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -40,7 +41,6 @@ tion) [C]</a></li>
 - set N=2000 and repeat the benchmarking for *collect_data* and compare vanilla, vec & jit again (hint: comment out the calls of learn to avoid waiting for too long). What has changed?
 
 - (Bonus) Adapt *collect_data* to run on a GPU instead using numba/cuda
-
 
 # All My Threads [C,Python]
 
