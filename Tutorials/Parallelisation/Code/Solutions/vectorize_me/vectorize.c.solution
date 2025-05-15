@@ -9,7 +9,7 @@
 void test(float* A, const float* B) {
    printf("Test function\n");
 
-   for (int j = 0; j < N/10; j++) {
+   for (int j = 0; j < 10; j++) {
      #pragma omp simd
      for (int i = 0; i < N; i++) {
        A[i] = A[i] + B[i];

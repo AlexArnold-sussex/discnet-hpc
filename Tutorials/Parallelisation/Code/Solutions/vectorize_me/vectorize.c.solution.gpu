@@ -13,7 +13,7 @@ void test(float* A, const float* B) {
    // inside the outer loop when spawning the kernels
    #pragma omp target data map(to: B[0:N]) map(tofrom: A[0:N])
    {
-   for (int j = 0; j < N/10; j++) {
+   for (int j = 0; j < 10; j++) {
      #pragma omp target teams distribute parallel for num_teams(100)
      for (int i = 0;i < N; i++) {
        A[i] = A[i] + B[i];
